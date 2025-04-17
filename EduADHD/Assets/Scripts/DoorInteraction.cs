@@ -24,7 +24,13 @@ public class DoorInteraction: MonoBehaviour
             if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
             _currentCoroutine = StartCoroutine(ToggleDoor());
         }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
+            _currentCoroutine = StartCoroutine(ToggleDoor());
+        }
     }
+
     private IEnumerator ToggleDoor()
     {
         Quaternion targetRotation = isOpen ? _closedRotation: _openRotation; 
