@@ -8,7 +8,9 @@ public class AiMovement : MonoBehaviour
     public float pauseDuration = 10f; // time to wait at each destination
     public float rotationSpeed = 5f;
     public bool isTeacher;
+    public bool stationary;
     
+    private Animator aiAnimator;
 
     private NavMeshAgent theAgent;
     private int currentDestinationIndex = 0;
@@ -22,6 +24,7 @@ public class AiMovement : MonoBehaviour
     void Start()
     {
         theAgent = GetComponent<NavMeshAgent>();
+        aiAnimator = GetComponent<Animator>();
     }
 
     void Update()
@@ -62,6 +65,9 @@ public class AiMovement : MonoBehaviour
         // Check if agent reached the destination
         if (!hasArrived && !theAgent.pathPending && theAgent.remainingDistance <= theAgent.stoppingDistance)
         {
+            if (aiAnimator != null && !hasArrived){
+            aiAnimator.SetTrigger("IdleTr");
+        }
             hasArrived = true;
             isRotating = true;
             pauseTimer = 0f; // Start pause
@@ -81,7 +87,7 @@ public class AiMovement : MonoBehaviour
         }
 
         // Pause before moving to next destination
-        if (hasArrived)
+        if (hasArrived && !stationary)
         {
             pauseTimer += Time.deltaTime;
             if (pauseTimer >= pauseDuration)
@@ -98,5 +104,8 @@ public class AiMovement : MonoBehaviour
         theAgent.SetDestination(destinations[currentDestinationIndex].position);
         hasArrived = false;
         isRotating = false;
+        if (aiAnimator != null){
+            aiAnimator.SetTrigger("WalkTr");
+        }
     }
 }
