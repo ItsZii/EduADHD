@@ -22,8 +22,12 @@ public class FirstPersonController : MonoBehaviour
     [Header ("References")]
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private PlayerInputHandler playerInputHandler;
 
+    [SerializeField] private PlayerInputHandler playerInputHandler;
+    public GameObject thisObject;
+
+    [Header("External References")]
+    [SerializeField] private PauseController pauseCtrl;
 
     private Vector3 currentMovement;
     private float verticalRotation;
@@ -40,6 +44,7 @@ public class FirstPersonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         HandleMovement();
         HandleRotation();
     }
@@ -55,7 +60,7 @@ public class FirstPersonController : MonoBehaviour
 
     private void HandleJumping()
     {
-        if (characterController.isGrounded)
+        if (characterController.isGrounded && thisObject.tag == "Player")
         {
             currentMovement.y = -0.5f;
 
@@ -74,13 +79,16 @@ public class FirstPersonController : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector3 worldDirection = CalculateWorldDirection();
-        currentMovement.x = worldDirection.x * walkSpeed;
-        currentMovement.z = worldDirection.z * walkSpeed;
+        if (thisObject.tag == "Player")
+        {
+            Vector3 worldDirection = CalculateWorldDirection();
+            currentMovement.x = worldDirection.x * walkSpeed;
+            currentMovement.z = worldDirection.z * walkSpeed;
 
 
-        HandleJumping();
-        characterController.Move(currentMovement * Time.deltaTime);
+            HandleJumping();
+            characterController.Move(currentMovement * Time.deltaTime);
+        }
     }
 
 
@@ -99,11 +107,15 @@ public class FirstPersonController : MonoBehaviour
 
     private void HandleRotation()
     {
-        float mouseXRotation = playerInputHandler.RotationInput.x * mouseSensitivity;
-        float mouseYRotation = playerInputHandler.RotationInput.y * mouseSensitivity;
+        if(!pauseCtrl.IsPaused)
+        {
+            float mouseXRotation = playerInputHandler.RotationInput.x * mouseSensitivity;
+            float mouseYRotation = playerInputHandler.RotationInput.y * mouseSensitivity;
 
 
-        ApplyHorizontalRotation(mouseXRotation);
-        ApplyVerticalRotation(mouseYRotation);
+            ApplyHorizontalRotation(mouseXRotation);
+            ApplyVerticalRotation(mouseYRotation);
+        }
+
     }
 }

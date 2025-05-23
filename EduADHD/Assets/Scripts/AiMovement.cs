@@ -9,6 +9,9 @@ public class AiMovement : MonoBehaviour
     public float rotationSpeed = 5f;
     public bool isTeacher;
     public bool stationary;
+
+    [Header("External References")]
+    [SerializeField] private ClassroomInteraction classroomInteraction;
     
     private Animator aiAnimator;
 
@@ -50,7 +53,7 @@ public class AiMovement : MonoBehaviour
             failSafe = 0f;
         }
         // Start walking with L
-        if (!started && Input.GetKeyDown(KeyCode.L))
+        if (!started && classroomInteraction.EndOfLession)
         {
             started = true;
             if(!isTeacher)

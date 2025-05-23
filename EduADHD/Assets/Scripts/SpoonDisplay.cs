@@ -10,25 +10,19 @@ public class SpoonDisplay : MonoBehaviour
     public Sprite unusedSpoon;
     public Sprite debtSpoon;
     public Image[] spoons;
+    [SerializeField] public StatusManager statusManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         for(int i = 0; i < spoons.Length; i++){
-            int positiveSpoons = currentSpoons;
+            int positiveSpoons = MainManager.Instance.SpoonCount;
 
-            if (currentSpoons < 0) {
+            if (MainManager.Instance.SpoonCount < 0) {
                 positiveSpoons = positiveSpoons * (-1);
             }
-            if (i < positiveSpoons && currentSpoons > 0){
+            if (i < positiveSpoons && MainManager.Instance.SpoonCount > 0){
                 spoons[i].sprite = unusedSpoon;
-            } else if (i < positiveSpoons && currentSpoons < 0){
+            } else if (i < positiveSpoons && MainManager.Instance.SpoonCount < 0){
                 spoons[i].sprite = debtSpoon;
             } else {
                 spoons[i].sprite = usedSpoon;
@@ -39,6 +33,23 @@ public class SpoonDisplay : MonoBehaviour
             } else{
                 spoons[i].enabled = false;
             }
+        }
+    }
+    public void UpdateSpoonCount(int changeAmount)
+    {
+        if (MainManager.Instance.SpoonCount < 0)
+        {
+            MainManager.Instance.SpoonCount -= changeAmount;
+            statusManager.SetValue((-3 * changeAmount), "personal");
+        } 
+        else if (MainManager.Instance.SpoonCount - changeAmount < 0)
+        {
+            MainManager.Instance.SpoonCount -= changeAmount;
+            statusManager.SetValue((MainManager.Instance.SpoonCount - changeAmount) * 3, "personal");
+        }
+        else
+        {
+            MainManager.Instance.SpoonCount -= changeAmount;
         }
     }
 }

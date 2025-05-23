@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/School.unity
     guid: c206d02e77fbc3148a269062ea0e8069
+  - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: 1e1810bb07412ea4ba71d2c1e60700b2
+  - enabled: 1
+    path: Assets/Scenes/Interval.unity
+    guid: f911ec99aa12b1d4b91657e043278121
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: c030d1cd1ff147d4f8217e007c05ee0e, type: 3}
   m_UseUCBPForAssetBundles: 0

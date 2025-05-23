@@ -3,7 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - stationary
+  - boy
+  - page
+  - bedroom
+  - bathroom
+  - livingroom
+  - leaving
+  - phone
+  - coat
+  - exit
+  - bag
+  - dishes
+  - homework
+  - Player2
+  - Mother
   layers:
   - Default
   - TransparentFX

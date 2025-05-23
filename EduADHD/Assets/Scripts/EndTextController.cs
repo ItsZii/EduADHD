@@ -8,7 +8,7 @@ public class TextSequenceFader : MonoBehaviour
     public TextMeshProUGUI[] texts; // Assign in inspector
     public float fadeDuration = 1f;
     public float holdDuration = 5f;
-    public string nextSceneName = "NextSceneName";
+    public string nextSceneName = "MainMenu";
 
     private void Start()
     {
@@ -34,6 +34,8 @@ public class TextSequenceFader : MonoBehaviour
         }
 
         // After last text fades out, switch scene
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene(nextSceneName);
     }
 
